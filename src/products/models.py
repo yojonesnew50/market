@@ -60,7 +60,7 @@ class Product(models.Model):
         return self.active
         
     def get_absolute_url(self, ):
-        return reverse('single_product', args=[self.slug])
+        return reverse('single_product', args=[self.slug,self.pk])
     
     
     
@@ -103,6 +103,19 @@ class Category(models.Model):
         verbose_name = "Category"
         verbose_name_plural = "Categories"
     
+    def get_featured_image(self):
+        try:
+            images = self.categoryimage_set.all()
+        except:
+            return None
+        
+        for i in images:
+            if i.featured_image:
+                return i.image
+            else:
+                return None
+
+
     def get_absolute_url(self, ):
         return reverse('category', args=[self.slug])
 

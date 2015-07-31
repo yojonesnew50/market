@@ -1,52 +1,131 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-
-
-{% block jumbotron %}
+   {% block scripts %}
+      <!--Master Slider Styles-->
+    <link href="{% static 'masterslider/style/masterslider.css' %}" rel="stylesheet" media="screen">
+    <!--Styles-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" media="screen">
     
-      <div class="jumbotron">
-        <img class="featured" src="{% static "img/feature.png" %}" alt="jacket">
-      </div>
+    <!--Modernizr-->
+		<script src="{% static 'js/libs/modernizr.custom.js' %}"></script>
+    <!--Adding Media Queries Support for IE8-->
+    <!--[if lt IE 9]>
+      <script src="js/plugins/respond.js"></script>
+    <![endif]-->
 {% endblock %}
+
 {% block content %}
 
-<div class='row'>
-
-{% for product in products %}
- <div class="col-sm-4">
-    <div class="thumbnail">
+    	<!--Hero Slider-->
+      <section class="hero-slider">
+      	<div class="master-slider" id="hero-slider">
         
-
-{% if product.get_featured_image  %}
-<img src="{{ product.get_featured_image.url }}" style='max-height: 200px;'>  <br/>
+        	<!--Slide 1-->
+        	<div class="ms-slide" data-delay="7">
+          	<div class="overlay"></div>
+          	<img src="masterslider/blank.gif" data-src="{% static 'img/feature.png' %}" alt=""/>
+            <h2 style="width: 456px; left: 110px; top: 110px;" class="dark-color ms-layer" data-effect="top(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Look for all bags at our shop!</h2>
+            <p style="width: 456px; left: 110px; top: 210px;" class="dark-color ms-layer" data-effect="back(500)" data-duration="700" data-delay="500" data-ease="easeOutQuad">In this slider (which works both on touch screen and desktop devices) you can change the title, the description and button texts. It's all that you need to demonstrate your top rated products. </p>
+            <div style="left: 110px; top: 300px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-black" href="#">Go to catalog</a></div>
+            <div style="left: 350px; top: 300px;" class="ms-layer button" data-effect="bottom(50,true)" data-duration="700" data-delay="950" data-ease="easeOutQuad"><a class="btn btn-primary" href="#">Browse all</a></div>
+          </div>
+          
+        	<!--Slide 2-->
+        	<div class="ms-slide" data-delay="7">
+            <span class="overlay"></span>
+          	<img src="masterslider/blank.gif" data-src="{% static 'img/feature.png' %}" alt="Necessaire"/>
+            <h2 style="width: 456px; left: 110px; top: 110px;" class="dark-color ms-layer" data-effect="bottom(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Necessaire</h2>
+            <p style="width: 456px; left: 110px; top: 210px;" class="dark-color ms-layer" data-effect="bottom(50,true)" data-duration="700" data-delay="500" data-ease="easeOutQuad">In this slider (which works both on touch screen and desktop devices) you can change the title, the description and button texts. It's all that you need to demonstrate your top rated products. </p>
+            <div style="left: 110px; top: 330px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-black" href="#">Go to catalog</a></div>
+            <div style="left: 350px; top: 330px;" class="ms-layer button" data-effect="bottom(50,true)" data-duration="700" data-delay="950" data-ease="easeOutQuad"><a class="btn btn-primary" href="#">Browse all</a></div>
+          </div>
+          
+        	<!--Slide 3-->
+        	<div class="ms-slide" data-delay="7">
+          	<div class="overlay"></div>
+          	<img src="masterslider/blank.gif" data-src="{% static 'img/feature.png' %}" alt="Crescent"/>
+            <h2 style="width: 456px; left: 110px; top: 110px;" class="dark-color ms-layer" data-effect="left(50,true)" data-duration="700" data-delay="250" data-ease="easeOutQuad">Crescent</h2>
+            <p style="width: 456px; left: 110px; top: 210px;" class="dark-color ms-layer" data-effect="left(50,true)" data-duration="700" data-delay="500" data-ease="easeOutQuad">In this slider (which works both on touch screen and desktop devices) you can change the title, the description and button texts. It's all that you need to demonstrate your top rated products. </p>
+            <div style="left: 110px; top: 330px;" class="ms-layer button" data-effect="left(50,true)" data-duration="500" data-delay="750" data-ease="easeOutQuad"><a class="btn btn-black" href="#">Go to catalog</a></div>
+            <div style="left: 350px; top: 330px;" class="ms-layer button" data-effect="bottom(50,true)" data-duration="700" data-delay="950" data-ease="easeOutQuad"><a class="btn btn-primary" href="#">Browse all</a></div>
+          </div>
+          
+        </div>
+      </section><!--Hero Slider Close-->
+     
+	<!--Categories-->
+      <section class="cat-tiles">
+      	<div class="container">
+        	<h2>Browse categories</h2>
+        	<div class="row">
+                {% for category in categories %}
+                	<!--Category-->
+          	<div class="category col-lg-2 col-md-2 col-sm-4 col-xs-6">
+            	<a href="{% url 'category' category.slug %}">
+                    {% if category.get_featured_image  %}
+<img src="{{ category.get_featured_image.url }}" style='height:189px;width:163px;'>
 {% else %}
-<img src="{% static 'img/placeholder_image.png' %}" alt="...">
+<img src="{% static 'img/placeholder_image.png' %}" style='height:260px;width:285px;' alt="...">
 {% endif %}
-
- <h3>{{ product }} </h3>
- <p>{{ product.description }}</p>
- <p> {{ product.get_price }}</p>
-        <p><a href="{% url 'single_product' product.slug %}" class="btn btn-primary" role="button">View Product</a>
-        
-        {% if product in cartitems %}
-        <a href="{% url 'cart' %}" class="btn btn-default">View Cart</a>
+                <p>{{ category }}</p>
+              </a>
+            </div>
+                {% endfor %}
+          </div>
+        </div>
+      </section><!--Categories Close-->
+      
+      <!--Catalog Grid-->
+      <section class="catalog-grid">
+      	<div class="container">
+        	<h2 class="dark-color">Catalog picks</h2>
+          <div class="row">
+          	{% for product in products %}
+            <!--Tile-->
+        	<div class="col-lg-3 col-md-4 col-sm-6">
+            	<div class="tile">
+                    <div class="price-label">{{ product.get_price }} $</div>
+                    <a href="{% url 'single_product' product.slug product.pk %}">
+{% if product.get_featured_image  %}
+<img src="{{ product.get_featured_image.url }}" style='height:260px;width:285px;'>
+{% else %}
+<img src="{% static 'img/placeholder_image.png' %}" style='height:260px;width:285px;' alt="...">
+{% endif %}
+ <span class="tile-overlay"></span>
+                </a>
+ <div class="footer">
+                	<a href="{% url 'single_product' product.slug product.pk %}">{{ product }}</a>
+                  <span>by {{ product.user }}</span>
+       {% if product in cartitems %}
+        <button href="{% url 'cart' %}" class="btn btn-primary">View Cart</button>
         {% else %}
-        <a href="{% url 'update_cart' product.id %}" class="btn btn-default" role="button">Add to Cart</a></p>
+        <button href="{% url 'update_cart' product.id %}" class="btn btn-primary">Add to Cart</button>
         {% endif %}
-      </div>
-    </div>
-{% endfor %}
+                </div>
+              </div>
+              </div>
+            {% endfor %}           
+          </div>
+        </div>
+      </section><!--Catalog Grid Close-->
+      
+{% endblock %}
 
-
-       
-        
-
-    
-  </div>
-
-
-    
-    
-    
-    
+{% block buttomScripts %}
+     <script src="{% static 'js/libs/jquery-1.11.1.min.js' %}"></script>
+        <script src="{% static 'js/libs/jquery-ui-1.10.4.custom.min.js' %}"></script>
+        <script src="{% static 'js/libs/jquery.easing.min.js' %}"></script>
+        <script src="{% static 'js/plugins/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/plugins/smoothscroll.js' %}"></script>
+        <script src="{% static 'js/plugins/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'js/plugins/icheck.min.js' %}"></script>
+        <script src="{% static 'js/plugins/jquery.placeholder.js' %}"></script>
+        <script src="{% static 'js/plugins/jquery.stellar.min.js' %}"></script>
+        <script src="{% static 'js/plugins/jquery.touchSwipe.min.js' %}"></script>
+        <script src="{% static 'js/plugins/jquery.shuffle.min.js' %}"></script>
+        <script src="{% static 'js/plugins/lightGallery.min.js' %}"></script>
+        <script src="{% static 'js/plugins/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'js/plugins/masterslider.min.js' %}"></script>
+        <script src="{% static 'mailer/mailer.js' %}"></script>
+        <script src="{% static 'js/scripts.js' %}"></script>
 {% endblock %}
