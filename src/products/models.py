@@ -9,14 +9,12 @@ from django.core.urlresolvers import reverse
 protected_loc = settings.PROTECTED_UPLOADS
 
 
-
-
-
 def download_loc(instance, filename):
     if instance.user.username:
         return "%s/download/%s" %(instance.user.username, filename)
     else:
         return "%s/download/%s" %("default", filename)
+
 
 class Product(models.Model):
     user = models.ForeignKey(User, null=True, blank=True)
@@ -30,7 +28,8 @@ class Product(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
     active = models.BooleanField(default=True)
-    
+    image = models.ImageField(upload_to="products/image/",default='products/image/1397823008_20.png')
+   
     def __unicode__(self):
         return str(self.title)
     
@@ -55,13 +54,11 @@ class Product(models.Model):
             else:
                 return None
 
-
     def is_active(self):
         return self.active
         
     def get_absolute_url(self, ):
         return reverse('single_product', args=[self.slug,self.pk])
-    
     
     
 class ProductImage(models.Model):
@@ -74,8 +71,7 @@ class ProductImage(models.Model):
     
     def __unicode__(self):
         return str(self.title)
-    
-
+   
     
 class Tag(models.Model):
     product = models.ForeignKey(Product)
@@ -95,6 +91,7 @@ class Category(models.Model):
     slug = models.SlugField()
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    image = models.ImageField(upload_to="products/image/",default='products/image/1397823008_20.png')
     
     def __unicode__(self):
         return str(self.title)
@@ -115,7 +112,6 @@ class Category(models.Model):
             else:
                 return None
 
-
     def get_absolute_url(self, ):
         return reverse('category', args=[self.slug])
 
@@ -134,6 +130,7 @@ class CategoryImage(models.Model):
     class Meta:
         verbose_name = "Category Image"
         verbose_name_plural = "Category Images"
+
 
 class FeaturedManager(models.Manager):
     def get_featured_instance(self):

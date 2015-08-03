@@ -32,3 +32,6 @@ def home(request):
             cartitems.append(item.product)
 
     return render_to_response("home.html", locals(), context_instance=RequestContext(request))
+
+def my_custom_404_view(request):
+    return render_to_response('404.html', {})
