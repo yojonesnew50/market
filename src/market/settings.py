@@ -25,7 +25,8 @@ SECRET_KEY = 'n4%1%=jana%2ts)@u4k1^6v80o52_z0h5xd_(^b6c^#z4b9y41'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    ]
 
 #Email setup
 EMAIL_HOST = 'smtp.gmail.com'
@@ -50,10 +51,20 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    # The Django sites framework is required
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'django.contrib.admin',
+    'django.contrib.admin',
+
+    
+    #'allauth',
+    #'allauth.account',
+    #'allauth.socialaccount',
+    ## ... include the providers you want to enable:    
+    #'allauth.socialaccount.providers.facebook',
+    #'allauth.socialaccount.providers.google',
+    #'allauth.socialaccount.providers.twitter',
      #'south',
      'bootstrap_themes',
      'registration',
@@ -146,3 +157,12 @@ PROTECTED_UPLOADS =  os.path.join(os.path.dirname(BASE_DIR), "static", "protecte
 
 
 
+#AUTHENTICATION_BACKENDS = (
+    
+#    # Needed to login by username in Django admin, regardless of `allauth`
+#    'django.contrib.auth.backends.ModelBackend',
+
+#    # `allauth` specific authentication methods, such as login by e-mail
+#    'allauth.account.auth_backends.AuthenticationBackend',
+    
+#)
